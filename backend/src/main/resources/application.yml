@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application:
+    name: party-build-system
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/party_build?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${DB_USER:party}
+    password: ${DB_PASSWORD:party_dev_2026}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 4
+      connection-timeout: 3000
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-only-secret-change-me-please-32bytes-minimum}
+    expire-hours: 8
+  crypto:
+    key: ${CRYPTO_KEY:dev-only-crypto-key-32-bytes-min}
+  llm:
+    provider: ${LLM_PROVIDER:tokenrhythm}
+    base-url: ${LLM_BASE_URL:https://tokenrhythm.studio/v1}
+    api-key: ${LLM_API_KEY:}
+    model: ${LLM_MODEL:deepseek-v4.1-flash-1017}
+    timeout-seconds: 30
+    max-retries: 1
+    mock: ${LLM_MOCK:false}
+  file:
+    root: ${FILE_ROOT:./data/files}
+  ocr:
+    tesseract: ${TESSERACT_CMD:tesseract}
+    language: ${TESSERACT_LANG:chi_sim+eng}
+    timeout-seconds: 60
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+
+logging:
+  level:
+    root: INFO
+    com.party.build: DEBUG
