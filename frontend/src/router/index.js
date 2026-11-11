@@ -11,6 +11,8 @@ const routes = [
       { path: 'persons', name: 'persons', component: () => import('../views/Persons.vue'), meta: { title: '人员台账' } },
       { path: 'persons/:id/materials', name: 'person-materials', component: () => import('../views/PersonMaterials.vue'), meta: { title: '材料核验' } },
       { path: 'config', name: 'config', component: () => import('../views/ChecklistConfig.vue'), meta: { title: '清单配置', roles: ['R1'] } },
+      { path: 'reviews', name: 'reviews', component: () => import('../views/Reviews.vue'), meta: { title: '材料复核', roles: ['R1', 'R2', 'R3'] } },
+      { path: 'messages', name: 'messages', component: () => import('../views/Messages.vue'), meta: { title: '消息中心' } },
       { path: 'poc', name: 'poc', component: () => import('../views/PocLab.vue'), meta: { title: 'POC 实验室' } }
     ]
   },

@@ -18,6 +18,9 @@
         <el-menu-item v-if="auth.role !== 'R4'" index="/poc">
           <el-icon><MagicStick /></el-icon><span>POC 实验室</span>
         </el-menu-item>
+        <el-menu-item v-if="auth.role !== 'R4'" index="/reviews">
+          <el-icon><DocumentChecked /></el-icon><span>材料复核</span>
+        </el-menu-item>
         <el-menu-item v-if="auth.role === 'R1'" index="/config">
           <el-icon><Setting /></el-icon><span>清单配置</span>
         </el-menu-item>
@@ -32,6 +35,11 @@
           <el-tag size="small" effect="plain" type="danger">一期 MVP 骨架</el-tag>
         </div>
         <div class="header-right">
+          <el-badge :value="unread" :hidden="unread === 0" class="bell">
+            <el-button link @click="$router.push('/messages')">
+              <el-icon size="18"><Bell /></el-icon>
+            </el-button>
+          </el-badge>
           <el-tag size="small" type="info">{{ roleLabel }}</el-tag>
           <el-dropdown @command="onCommand">
             <span class="user">
@@ -53,16 +61,29 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { ElMessage } from 'element-plus'
+import { unreadCount } from '../api/message'
 
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
 
 const activeMenu = computed(() => route.path)
+const unread = ref(0)
+
+async function refreshUnread() {
+  try {
+    unread.value = (await unreadCount()).count
+  } catch (e) {
+    unread.value = 0
+  }
+}
+
+onMounted(refreshUnread)
+watch(() => route.path, refreshUnread)
 const roleMap = { R1: '超级管理员', R2: '支部书记', R3: '党务助理', R4: '学生' }
 const roleLabel = computed(() => roleMap[auth.role] || auth.role || '未登录')
 
@@ -143,6 +164,9 @@ async function onCommand(command) {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+.bell {
+  margin-right: 4px;
 }
 .user {
   cursor: pointer;

@@ -55,6 +55,8 @@
             </el-upload>
             <el-button v-if="row.currentVersionId" link type="warning" :loading="verifying[row.materialId]" @click="doVerify(row)">重新核验</el-button>
             <el-button v-if="row.reportId" link type="primary" @click="openReport(row)">查看报告</el-button>
+            <el-button v-if="row.status === 'M3' && auth.role !== 'R4'" link type="danger"
+                       @click="$router.push(`/reviews?materialId=${row.materialId}`)">去复核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -97,6 +99,9 @@ import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getPerson } from '../api/person'
 import { getReport, getTask, listMaterials, uploadVersion, verifyMaterial } from '../api/material'
+import { useAuthStore } from '../stores/auth'
+
+const auth = useAuthStore()
 
 const route = useRoute()
 const personId = Number(route.params.id)
