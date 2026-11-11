@@ -107,6 +107,22 @@ npm run build
 | GET | `/api/v1/persons/{id}/id-card` | 完整身份证号（R1/R2） |
 | GET | `/api/v1/persons/import/template` | 导入模板 |
 | POST | `/api/v1/persons/import` | Excel 批量导入 |
+| GET | `/api/v1/material-types` | 材料类型 |
+| POST/PUT | `/api/v1/material-types`、`/material-types/{id}` | 维护材料类型 |
+| GET/POST | `/api/v1/checklists/templates` | 清单模板列表/新建 |
+| GET/PUT | `/api/v1/checklists/templates/{id}` | 模板详情/修改 |
+| POST | `/api/v1/checklists/templates/{id}/clone` | 克隆新版本 |
+| POST | `/api/v1/checklists/templates/{id}/validate` | 校验模板 |
+| POST | `/api/v1/checklists/templates/{id}/publish` | 发布模板 |
+| POST/PUT/DELETE | `/api/v1/checklists/templates/{id}/items`、`/checklists/items/{itemId}` | 清单条目维护 |
+| GET | `/api/v1/persons/{personId}/materials` | 人员材料清单 |
+| GET | `/api/v1/materials/{id}` | 材料详情与最新报告 |
+| POST | `/api/v1/materials/{id}/versions` | 上传材料版本 |
+| GET | `/api/v1/materials/{id}/versions/{versionId}/download` | 鉴权下载 |
+| POST | `/api/v1/materials/{id}/verify` | 发起/重试核验 |
+| GET | `/api/v1/verify-tasks/{taskId}` | 异步任务状态 |
+| GET | `/api/v1/materials/{id}/reports/latest` | 最新报告 |
+| GET | `/api/v1/reports/{reportId}` | 报告详情 |
 | GET | `/api/v1/poc/config` | POC 配置 |
 | POST | `/api/v1/poc/llm` | 模型 JSON 输出验证 |
 | POST | `/api/v1/poc/ocr` | OCR/文本抽取 |
@@ -136,12 +152,12 @@ python3 poc/ocr_poc.py /tmp/page-05.png --keywords 文档说明 需求规格说�
 - 人员台账查询、建档、身份证号加密+掩码、完整值授权接口；
 - Excel 批量导入（部分成功、错误行定位、学号幂等）；
 - POC：模型 JSON、OCR、规则+语义端到端核验、失败降级；
-- Vue 3 + Element Plus 登录、布局、工作台、台账、POC 实验室。
+- M3 材料清单配置：材料类型、模板、条目、校验、发布；
+- M4 核验闭环：材料上传、数据库任务队列、异步核验、报告与发现项落库；
+- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、POC 实验室。
 
 尚未实现（按设计后续迭代）：
 
-- 材料清单模板配置后台；
-- 核验任务异步队列与报告持久化；
 - 复核/退回/版本留痕；
 - 流程看板与六规则推进；
 - 时限预警与倒推排期；
