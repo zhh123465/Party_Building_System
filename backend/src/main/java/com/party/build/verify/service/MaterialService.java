@@ -140,6 +140,8 @@ public class MaterialService {
 
         material.setStatus("M2");
         material.setCurrentVersionId(version.getVersionId());
+        material.setReviewerId(null);
+        material.setLastReviewAt(null);
         materialMapper.updateById(material);
 
         VerifyTask task = createTask(material, version);
@@ -181,9 +183,10 @@ public class MaterialService {
     }
 
     public VerifyReportVO latestReport(Long materialId, UserPrincipal principal) {
-        requireMaterial(materialId, principal);
+        Material material = requireMaterial(materialId, principal);
         VerifyReport report = reportMapper.selectOne(new LambdaQueryWrapper<VerifyReport>()
                 .eq(VerifyReport::getMaterialId, materialId)
+                .eq(material.getCurrentVersionId() != null, VerifyReport::getVersionId, material.getCurrentVersionId())
                 .orderByDesc(VerifyReport::getReportId).last("limit 1"));
         return report == null ? null : toReportVO(report);
     }
@@ -259,6 +262,7 @@ public class MaterialService {
         }
         VerifyReport report = reportMapper.selectOne(new LambdaQueryWrapper<VerifyReport>()
                 .eq(VerifyReport::getMaterialId, material.getMaterialId())
+                .eq(material.getCurrentVersionId() != null, VerifyReport::getVersionId, material.getCurrentVersionId())
                 .orderByDesc(VerifyReport::getReportId).last("limit 1"));
         if (report != null) {
             vo.setReportId(report.getReportId());
