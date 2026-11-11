@@ -9,6 +9,7 @@ import com.party.build.verify.ai.LlmResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/poc")
+@PreAuthorize("hasAnyRole('R1','R2','R3')")
 @RequiredArgsConstructor
 public class PocController {
     private static final List<String> DEFAULT_POINTS = List.of(

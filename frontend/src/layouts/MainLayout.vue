@@ -15,7 +15,7 @@
         <el-menu-item index="/persons">
           <el-icon><User /></el-icon><span>人员台账</span>
         </el-menu-item>
-        <el-menu-item index="/poc">
+        <el-menu-item v-if="auth.role !== 'R4'" index="/poc">
           <el-icon><MagicStick /></el-icon><span>POC 实验室</span>
         </el-menu-item>
         <el-menu-item v-if="auth.role === 'R1'" index="/config">
