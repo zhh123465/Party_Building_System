@@ -16,23 +16,29 @@
 
 ## 2. 当前阶段
 
-当前处于**软件工程设计与需求基线阶段**，尚未进入编码实现。
+当前处于**工程骨架与 POC 验证阶段**。
 
 已完成：
 
-- 需求规格说明书分析
+- 需求规格说明书 V2.1（已确认 Q-01—Q-35）
 - 可行性研究
 - 总体设计
 - 详细设计
+- Spring Boot 3 + MySQL 8 工程骨架
+- Vue 3 + Element Plus 前端骨架
+- POC-1 模型 JSON、POC-2 OCR、POC-3 端到端核验、POC-4 降级、POC-5 权限、POC-6 批量导入
 
 尚未开始：
 
-- 后端 / 前端编码
-- 数据库建库脚本
-- 接口实现
-- 测试与部署实施
+- 材料清单配置后台
+- 核验任务异步队列与报告持久化
+- 复核/退回/版本留痕
+- 流程看板与六规则推进
+- 时限预警与倒推排期
+- 报表导出、合规指数、归档、审计日志
 
-> 说明：仓库内出现的表结构、接口路径、配置样例均为**设计产物**，不代表已经编写可运行代码。
+> POC 结果见 `poc/results/poc_summary.md`；运行方式见 `DEVELOPMENT.md`。
+> POC 当前使用 tokenrhythm `deepseek-v4.1-flash-1017`（OpenAI 兼容接口），生产可按 SRS 切换豆包或其他兼容服务。
 
 ## 3. 文档索引
 
@@ -53,7 +59,7 @@
 | 交付形态 | 网页端，Chrome / Edge 最近两个大版本，最小分辨率 1366×768 |
 | 技术栈 | Java 17 + Spring Boot 3 + MyBatis-Plus + MySQL 8；Vue 3 + Vite + Element Plus + ECharts |
 | 数据库 | MySQL 8.0（InnoDB，utf8mb4） |
-| 大模型 | 豆包（火山方舟）API，模型名与提示词版本均可配置 |
+| 大模型 | OpenAI 兼容 API；POC 使用 tokenrhythm `deepseek-v4.1-flash-1017`，可切换豆包；模型名与提示词版本可配置 |
 | 文件存储 | 单机本地非公开目录，经鉴权接口访问，不暴露裸链接 |
 | 异步任务 | 数据库任务表 + 应用内调度线程，一期不引入消息队列 |
 | 权限模型 | RBAC + 支部数据范围双重校验；一期单主角色 |
@@ -68,9 +74,15 @@
 Party_Building_System/
 ├── README.md
 ├── .gitignore
+├── backend/                 # Spring Boot 3 工程骨架
+├── frontend/                # Vue 3 + Element Plus 骨架
+├── poc/                     # POC 脚本与结果
+├── scripts/                 # 文档导出脚本
 ├── docs/
 │   ├── requirements/
 │   │   ├── 党员发展智能管理系统需求规格说明书V2.0.docx
+│   │   ├── 党员发展智能管理系统需求规格说明书V2.1.md
+│   │   ├── 党员发展智能管理系统需求规格说明书V2.1.docx
 │   │   └── 需求分析报告.md
 │   ├── feasibility/
 │   │   └── 可行性研究报告.md
@@ -78,7 +90,6 @@ Party_Building_System/
 │   │   ├── 总体设计说明书.md
 │   │   └── 详细设计说明书.md
 │   └── export/                 # 由 Markdown 导出的 Word / PDF（生成物）
-└── （后续开发目录：backend/、frontend/、deploy/）
 ```
 
 ## 6. 版本管理约定
