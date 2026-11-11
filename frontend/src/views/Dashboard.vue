@@ -28,6 +28,7 @@
         <div class="quick">
           <el-button type="danger" plain @click="$router.push('/board')">流程看板</el-button>
           <el-button type="danger" plain @click="$router.push('/persons')">人员台账</el-button>
+          <el-button type="danger" plain @click="$router.push('/reports')">统计报表</el-button>
           <el-button type="warning" plain @click="$router.push('/poc')">POC 实验室</el-button>
         </div>
         <el-alert

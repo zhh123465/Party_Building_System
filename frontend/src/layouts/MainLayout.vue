@@ -30,6 +30,9 @@
         <el-menu-item v-if="auth.role !== 'R4'" index="/schedule">
           <el-icon><Calendar /></el-icon><span>发展日历</span>
         </el-menu-item>
+        <el-menu-item v-if="auth.role !== 'R4'" index="/reports">
+          <el-icon><DataAnalysis /></el-icon><span>统计报表</span>
+        </el-menu-item>
         <el-menu-item v-if="auth.role === 'R1'" index="/config">
           <el-icon><Setting /></el-icon><span>清单配置</span>
         </el-menu-item>
