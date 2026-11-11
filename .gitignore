@@ -8,7 +8,7 @@ Thumbs.db
 
 # ---- Java / Maven / Gradle ----
 target/
-build/
+/build/
 out/
 *.class
 *.jar
