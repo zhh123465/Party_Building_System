@@ -26,6 +26,7 @@
       <div class="card">
         <h3>快速入口</h3>
         <div class="quick">
+          <el-button type="danger" plain @click="$router.push('/board')">流程看板</el-button>
           <el-button type="danger" plain @click="$router.push('/persons')">人员台账</el-button>
           <el-button type="warning" plain @click="$router.push('/poc')">POC 实验室</el-button>
         </div>

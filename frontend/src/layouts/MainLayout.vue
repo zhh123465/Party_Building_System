@@ -18,6 +18,9 @@
         <el-menu-item v-if="auth.role !== 'R4'" index="/poc">
           <el-icon><MagicStick /></el-icon><span>POC 实验室</span>
         </el-menu-item>
+        <el-menu-item v-if="auth.role !== 'R4'" index="/board">
+          <el-icon><DataBoard /></el-icon><span>流程看板</span>
+        </el-menu-item>
         <el-menu-item v-if="auth.role !== 'R4'" index="/reviews">
           <el-icon><DocumentChecked /></el-icon><span>材料复核</span>
         </el-menu-item>

@@ -10,6 +10,7 @@ const routes = [
       { path: 'dashboard', name: 'dashboard', component: () => import('../views/Dashboard.vue'), meta: { title: '工作台' } },
       { path: 'persons', name: 'persons', component: () => import('../views/Persons.vue'), meta: { title: '人员台账' } },
       { path: 'persons/:id/materials', name: 'person-materials', component: () => import('../views/PersonMaterials.vue'), meta: { title: '材料核验' } },
+      { path: 'board', name: 'board', component: () => import('../views/Board.vue'), meta: { title: '流程看板', roles: ['R1', 'R2', 'R3'] } },
       { path: 'config', name: 'config', component: () => import('../views/ChecklistConfig.vue'), meta: { title: '清单配置', roles: ['R1'] } },
       { path: 'reviews', name: 'reviews', component: () => import('../views/Reviews.vue'), meta: { title: '材料复核', roles: ['R1', 'R2', 'R3'] } },
       { path: 'messages', name: 'messages', component: () => import('../views/Messages.vue'), meta: { title: '消息中心' } },
