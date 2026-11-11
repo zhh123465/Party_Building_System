@@ -125,6 +125,12 @@ npm run build
 | GET | `/api/v1/verify-tasks/{taskId}` | 异步任务状态 |
 | GET | `/api/v1/materials/{id}/reports/latest` | 最新报告 |
 | GET | `/api/v1/reports/{reportId}` | 报告详情 |
+| GET | `/api/v1/process/board` | 流程看板 |
+| GET | `/api/v1/process/overview` | 看板总览 |
+| GET | `/api/v1/process/stage-distribution` | 阶段分布 |
+| GET | `/api/v1/process/persons/{id}/advance-check` | 六规则推进预校验 |
+| POST | `/api/v1/process/persons/{id}/advance` | 推进阶段 |
+| POST | `/api/v1/process/persons/{id}/rollback` | 回退阶段 |
 | GET | `/api/v1/reviews/pending` | 待复核材料 |
 | GET | `/api/v1/reviews/templates` | 退回意见模板 |
 | POST | `/api/v1/materials/{id}/review` | 提交复核（R3 初审 / R1、R2 终审） |
@@ -164,11 +170,12 @@ python3 poc/ocr_poc.py /tmp/page-05.png --keywords 文档说明 需求规格说�
 - M3 材料清单配置：材料类型、模板、条目、校验、发布；
 - M4 核验闭环：材料上传、数据库任务队列、异步核验、报告与发现项落库；
 - M5 复核闭环：待办、初审/终审、通过/退回、意见模板、版本留痕、站内消息；
-- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、材料复核、消息中心、POC 实验室。
+- M6 流程看板：人员进度、锁定/风险、阶段分布、六规则推进校验、二次确认、回退；
+- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、材料复核、流程看板、消息中心、POC 实验室。
 
 尚未实现（按设计后续迭代）：
 
-- 流程看板与六规则推进；
+- M7 时限预警与倒推排期；
 - 流程看板与六规则推进；
 - 时限预警与倒推排期；
 - 报表导出、合规指数、归档、审计日志。
