@@ -125,6 +125,12 @@ npm run build
 | GET | `/api/v1/verify-tasks/{taskId}` | 异步任务状态 |
 | GET | `/api/v1/materials/{id}/reports/latest` | 最新报告 |
 | GET | `/api/v1/reports/{reportId}` | 报告详情 |
+| GET | `/api/v1/reports/overview` | 报表总览 |
+| GET | `/api/v1/reports/stage-count` | 阶段人数 |
+| GET | `/api/v1/reports/completion` | 完成率与逾期 |
+| GET | `/api/v1/reports/compliance` | 人员合规指数 |
+| GET | `/api/v1/reports/compliance/heatmap` | 支部热力图 |
+| GET | `/api/v1/reports/export` | 导出 Excel |
 | GET | `/api/v1/time-rules` | 时限规则 |
 | PUT | `/api/v1/time-rules/{id}` | 修改时限规则 |
 | GET | `/api/v1/warnings` | 预警清单 |
@@ -180,11 +186,12 @@ python3 poc/ocr_poc.py /tmp/page-05.png --keywords 文档说明 需求规格说�
 - M5 复核闭环：待办、初审/终审、通过/退回、意见模板、版本留痕、站内消息；
 - M6 流程看板：人员进度、锁定/风险、阶段分布、六规则推进校验、二次确认、回退；
 - M7 时限预警：四级预警、定时任务、预警清单与处置、倒推排期、年度日历、时限规则维护；
-- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、材料复核、流程看板、时限预警、发展日历、时限规则、消息中心、POC 实验室。
+- M8 统计报表：阶段人数、完成率、逾期、合规指数 M/T/Q、支部热力图、Excel 导出；
+- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、材料复核、流程看板、时限预警、发展日历、时限规则、统计报表、消息中心、POC 实验室。
 
 尚未实现（按设计后续迭代）：
 
-- M8 统计报表与合规指数；
+- M9 电子档案归档与检索（二期）；
 - 流程看板与六规则推进；
 - 时限预警与倒推排期；
 - 报表导出、合规指数、归档、审计日志。
