@@ -36,6 +36,7 @@
         <el-table-column label="操作" width="110" fixed="right">
           <template #default="{ row }">
             <el-button link type="danger" @click="openDetail(row)">详情</el-button>
+            <el-button link type="warning" @click="$router.push(`/persons/${row.personId}/materials`)">材料</el-button>
           </template>
         </el-table-column>
       </el-table>

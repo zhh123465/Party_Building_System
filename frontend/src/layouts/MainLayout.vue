@@ -18,6 +18,9 @@
         <el-menu-item index="/poc">
           <el-icon><MagicStick /></el-icon><span>POC 实验室</span>
         </el-menu-item>
+        <el-menu-item v-if="auth.role === 'R1'" index="/config">
+          <el-icon><Setting /></el-icon><span>清单配置</span>
+        </el-menu-item>
       </el-menu>
       <div class="aside-footer">演示数据均为虚构</div>
     </el-aside>
