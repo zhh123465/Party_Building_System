@@ -88,6 +88,15 @@ public class PersonService {
         return toVO(p);
     }
 
+    public Person getEntity(Long personId, UserPrincipal principal) {
+        Person person = personMapper.selectById(personId);
+        if (person == null) {
+            throw new BizException(ErrorCode.VALIDATION_ERROR, "人员不存在");
+        }
+        checkScope(person, principal);
+        return person;
+    }
+
     public String decryptIdCard(Long personId, UserPrincipal principal) {
         Person person = personMapper.selectById(personId);
         if (person == null) {
@@ -115,7 +124,7 @@ public class PersonService {
         }
     }
 
-    private void checkScope(Person person, UserPrincipal principal) {
+    public void checkScope(Person person, UserPrincipal principal) {
         switch (principal.getRoleCode()) {
             case "R1" -> {
             }
