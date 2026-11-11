@@ -4,6 +4,7 @@
       <el-button link @click="$router.push('/persons')">← 返回台账</el-button>
       <h2 class="page-title" style="margin:0">材料核验 · {{ person?.name || '' }}</h2>
       <el-tag v-if="person" type="danger" effect="plain">{{ stageLabel(person.currentStage) }}</el-tag>
+      <el-button link type="danger" @click="$router.push(`/persons/${personId}/archive`)">电子档案</el-button>
     </div>
     <p class="page-subtitle">上传材料后系统自动进入“规则 + 语义”异步核验；核验完成前材料保持待核验状态。</p>
 
