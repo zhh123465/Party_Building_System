@@ -6,13 +6,17 @@ import com.party.build.common.api.TraceId;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @Slf4j
@@ -53,6 +57,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Result<Void>> handleUploadSize(MaxUploadSizeExceededException e) {
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
                 .body(Result.fail(ErrorCode.FILE_TOO_LARGE.code(), ErrorCode.FILE_TOO_LARGE.message()));
+    }
+
+    @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class,
+            HttpMessageNotReadableException.class})
+    public ResponseEntity<Result<Void>> handleBadRequest(Exception e) {
+        return ResponseEntity.badRequest().body(Result.fail(ErrorCode.VALIDATION_ERROR.code(), "请求参数格式错误"));
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<Result<Void>> handleDuplicate(DuplicateKeyException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Result.fail(ErrorCode.ALREADY_EXISTS.code(), "记录已存在"));
     }
 
     @ExceptionHandler(AccessDeniedException.class)

@@ -22,7 +22,9 @@ public class PersonCreateRequest {
     private String className;
     @NotNull
     private Long branchId;
+    @Pattern(regexp = "^1\\d{10}$", message = "手机号格式不正确")
     private String phone;
+    @Pattern(regexp = "^\\d{17}[\\dXx]$", message = "身份证号格式不正确")
     private String idCard;
     @NotNull
     private LocalDate applicationDate;

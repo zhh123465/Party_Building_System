@@ -46,6 +46,16 @@ public class FileStorageService {
         }
         String sha256;
         try (InputStream in = file.getInputStream()) {
+            byte[] header = in.readNBytes(8);
+            if (!magicMatches(ext, header)) {
+                throw new BizException(ErrorCode.FILE_TYPE_NOT_SUPPORTED, "文件内容与扩展名不匹配");
+            }
+        } catch (BizException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.FILE_STORAGE_ERROR, "读取文件失败");
+        }
+        try (InputStream in = file.getInputStream()) {
             sha256 = sha256(in);
         } catch (Exception e) {
             throw new BizException(ErrorCode.FILE_STORAGE_ERROR, "计算文件哈希失败");
@@ -78,6 +88,19 @@ public class FileStorageService {
 
     public Path root() {
         return root;
+    }
+
+    private boolean magicMatches(String ext, byte[] h) {
+        if (h == null || h.length < 4) {
+            return false;
+        }
+        return switch (ext) {
+            case "pdf" -> h[0] == 0x25 && h[1] == 0x50 && h[2] == 0x44 && h[3] == 0x46;
+            case "jpg", "jpeg" -> (h[0] & 0xFF) == 0xFF && (h[1] & 0xFF) == 0xD8 && (h[2] & 0xFF) == 0xFF;
+            case "png" -> (h[0] & 0xFF) == 0x89 && h[1] == 0x50 && h[2] == 0x4E && h[3] == 0x47;
+            case "docx" -> h[0] == 0x50 && h[1] == 0x4B && h[2] == 0x03 && h[3] == 0x04;
+            default -> false;
+        };
     }
 
     private String extension(String name) {
