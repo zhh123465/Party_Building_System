@@ -181,5 +181,25 @@ h2 {
   .login-left {
     display: none;
   }
+  .login-right {
+    padding: 18px;
+  }
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+@media (max-width: 480px) {
+  .login-right {
+    padding: 14px;
+    align-items: flex-start;
+    padding-top: 8vh;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  .accounts {
+    gap: 6px;
+  }
 }
 </style>

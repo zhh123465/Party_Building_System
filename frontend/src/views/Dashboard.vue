@@ -155,4 +155,28 @@ h3 {
     align-items: flex-start;
   }
 }
+@media (max-width: 600px) {
+  .hero {
+    padding: 18px 16px;
+    border-radius: 12px;
+  }
+  .hero h1 {
+    font-size: 19px;
+  }
+  .hero-badges {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .hero-badges strong {
+    font-size: 22px;
+  }
+  .quick {
+    flex-direction: column;
+  }
+  .quick .el-button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
 </style>

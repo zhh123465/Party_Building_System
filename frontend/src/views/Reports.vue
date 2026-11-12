@@ -215,4 +215,8 @@ h3 { margin: 0 0 10px; font-size: 16px; }
   .five { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 600px) {
+  .five { grid-template-columns: 1fr; }
+  .chart { height: 210px; }
+}
 </style>

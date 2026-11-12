@@ -140,3 +140,115 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+/* ---------- 响应式与移动端适配 ---------- */
+html, body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 18px;
+  }
+  .page-subtitle {
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .stat-grid,
+  .stat-grid.five {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 12px 14px;
+  }
+  .stat-card .value {
+    font-size: 22px;
+  }
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+  .toolbar {
+    gap: 8px;
+  }
+  .toolbar .el-input,
+  .toolbar .el-select,
+  .toolbar .el-date-editor,
+  .toolbar .el-input-number {
+    width: 100% !important;
+    flex: 1 1 100%;
+  }
+  .toolbar .el-button {
+    min-height: 38px;
+  }
+  .el-dialog {
+    width: 94vw !important;
+    max-width: 94vw;
+    margin-top: 4vh !important;
+  }
+  .el-dialog__body {
+    padding: 12px 14px;
+  }
+  .el-drawer {
+    width: 92vw !important;
+  }
+  .el-message-box {
+    width: 90vw !important;
+    max-width: 90vw;
+  }
+  .el-table {
+    font-size: 12px;
+  }
+  .el-table .cell {
+    word-break: break-word;
+  }
+  .el-pagination {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stat-grid,
+  .stat-grid.five {
+    grid-template-columns: 1fr;
+  }
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar > .el-button,
+  .toolbar > .el-dropdown {
+    width: 100%;
+  }
+  .toolbar > div[style*="flex:1"] {
+    display: none;
+  }
+  .page-title {
+    font-size: 17px;
+  }
+  .el-dialog {
+    width: 96vw !important;
+    max-width: 96vw;
+    margin-top: 2vh !important;
+  }
+  .el-drawer {
+    width: 96vw !important;
+  }
+  .el-descriptions__label,
+  .el-descriptions__content {
+    font-size: 12px;
+  }
+}
+
+@media (hover: none) {
+  .card:hover,
+  .stat-card:hover {
+    transform: none;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  }
+}

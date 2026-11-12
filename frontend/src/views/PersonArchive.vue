@@ -133,4 +133,9 @@ onMounted(load)
 .stage-title { display: flex; align-items: center; gap: 12px; }
 .small { color: #667085; font-size: 12px; }
 h3 { margin: 0 0 12px; font-size: 16px; }
+@media (max-width: 600px) {
+  .head { flex-wrap: wrap; gap: 8px; }
+  .head .page-title { width: 100%; order: 3; font-size: 17px; }
+  .stage-title { flex-wrap: wrap; gap: 6px; }
+}
 </style>

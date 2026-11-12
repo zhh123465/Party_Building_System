@@ -217,4 +217,20 @@ onMounted(load)
 h4 {
   margin: 18px 0 8px;
 }
+@media (max-width: 600px) {
+  .head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .head .page-title {
+    width: 100%;
+    order: 3;
+    font-size: 17px;
+  }
+  .report-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
 </style>

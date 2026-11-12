@@ -1,6 +1,7 @@
 <template>
   <el-container class="layout">
-    <el-aside width="236px" class="aside">
+    <div v-if="isMobile && sidebarOpen" class="sidebar-mask" @click="sidebarOpen = false"></div>
+    <el-aside width="236px" class="aside" :class="{ 'mobile-open': sidebarOpen }">
       <div class="brand">
         <div class="brand-mark">党</div>
         <div>
@@ -52,6 +53,9 @@
     <el-container>
       <el-header class="header">
         <div class="header-left">
+          <el-button v-if="isMobile" link class="menu-btn" @click="sidebarOpen = true">
+            <el-icon size="20"><Menu /></el-icon>
+          </el-button>
           <span class="header-title">{{ route.meta.title || '工作台' }}</span>
           <el-tag size="small" effect="plain" type="danger">一期 MVP</el-tag>
           <span class="today">{{ today }}</span>
@@ -83,7 +87,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { ElMessage } from 'element-plus'
@@ -96,6 +100,19 @@ const auth = useAuthStore()
 const activeMenu = computed(() => route.path)
 const unread = ref(0)
 const today = new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })
+const isMobile = ref(false)
+const sidebarOpen = ref(false)
+
+function updateViewport() {
+  isMobile.value = window.innerWidth <= 900
+  if (!isMobile.value) sidebarOpen.value = false
+}
+
+onMounted(() => {
+  updateViewport()
+  window.addEventListener('resize', updateViewport)
+})
+onBeforeUnmount(() => window.removeEventListener('resize', updateViewport))
 
 async function refreshUnread() {
   try {
@@ -106,7 +123,10 @@ async function refreshUnread() {
 }
 
 onMounted(refreshUnread)
-watch(() => route.path, refreshUnread)
+watch(() => route.path, () => {
+  refreshUnread()
+  sidebarOpen.value = false
+})
 const roleMap = { R1: '超级管理员', R2: '支部书记', R3: '党务助理', R4: '学生' }
 const roleLabel = computed(() => roleMap[auth.role] || auth.role || '未登录')
 
@@ -161,6 +181,7 @@ async function onCommand(command) {
 .menu {
   border-right: none;
   flex: 1;
+  overflow-y: auto;
 }
 .aside-footer {
   padding: 14px 18px;
@@ -178,6 +199,10 @@ async function onCommand(command) {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.menu-btn {
+  display: none;
+  color: #8f1d14;
 }
 .header-title {
   font-size: 16px;
@@ -205,5 +230,46 @@ async function onCommand(command) {
 .main {
   padding: 20px 24px 30px;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sidebar-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.45);
+  z-index: 1999;
+}
+
+@media (max-width: 900px) {
+  .aside {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2000;
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+    box-shadow: 12px 0 30px rgba(16, 24, 40, 0.18);
+  }
+  .aside.mobile-open {
+    transform: translateX(0);
+  }
+  .menu-btn {
+    display: inline-flex;
+  }
+  .today {
+    display: none;
+  }
+  .header {
+    padding: 0 10px;
+  }
+  .header-left .el-tag {
+    display: none;
+  }
+  .header-right .el-tag {
+    display: none;
+  }
+  .main {
+    padding: 14px 12px 26px;
+  }
 }
 </style>

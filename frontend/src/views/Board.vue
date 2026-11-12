@@ -384,4 +384,10 @@ h3 {
   .five { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 600px) {
+  .five { grid-template-columns: 1fr; }
+  .chart { height: 200px; }
+  .dist-row { grid-template-columns: 76px 1fr 28px; }
+  .blocker-item { flex-wrap: wrap; }
+}
 </style>
