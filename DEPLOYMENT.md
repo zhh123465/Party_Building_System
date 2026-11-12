@@ -84,7 +84,8 @@ nginx -s reload
 - 其余 API 必须携带 JWT；
 - `/api/v1/poc/**` 仅 R1/R2/R3 可访问，R4 返回 403；
 - 材料/人员接口按角色 + 支部/本人数据范围校验；
-- Nginx 设置 `X-Content-Type-Options`、`X-Frame-Options`、`Referrer-Policy`；
+- Nginx 设置 `X-Content-Type-Options`、`X-Frame-Options`、`Referrer-Policy`、CSP；
+- 登录接口按 IP 限流（10 次/分钟，突发 5 次）；
 - 上传大小限制 25MB；
 - 前端 `dist` 放在 `/var/www/party`，Nginx 不以 root 身份读取用户目录。
 

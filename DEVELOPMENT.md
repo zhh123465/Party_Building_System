@@ -165,6 +165,30 @@ npm run build
 | POST | `/api/v1/poc/verify` | 端到端双引擎核验 |
 | GET | `/api/v1/health` | 健康检查 |
 
+## 7.1 整体联调与验收
+
+```bash
+# 20 项接口冒烟测试
+python3 scripts/smoke_test.py
+
+# 后端单元测试
+cd backend && mvn test
+
+# 前端生产构建
+cd frontend && npm run build
+
+# 备份
+bash scripts/backup.sh
+```
+
+验收与安全文档：
+
+- `docs/acceptance/8分钟演示脚本.md`
+- `docs/acceptance/验收测试报告.md`
+- `docs/acceptance/用户使用说明.md`
+- `docs/security/安全性评估与整改报告.md`
+- `docs/security/备份与恢复说明.md`
+
 ## 8. POC 验证命令
 
 ```bash
@@ -200,7 +224,9 @@ python3 poc/ocr_poc.py /tmp/page-05.png --keywords 文档说明 需求规格说�
 
 尚未实现（按设计后续迭代）：
 
-- 整体联调、验收测试、8 分钟演示脚本、结题文档；
+- 真实业务人员易用性验收；
+- 正式环境 HTTPS、默认密码替换、访问范围限制；
+- 30—50 份 AI 标注样例集与准确率记录；
 - 流程看板与六规则推进；
 - 时限预警与倒推排期；
 - 报表导出、合规指数、归档、审计日志。

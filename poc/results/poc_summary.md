@@ -276,3 +276,22 @@ distinct student_no = 101
 | 备份脚本 | `scripts/backup.sh` 成功导出数据库 13KB + 文件包 34KB，附 SHA-256 |
 | 恢复说明 | `docs/security/备份与恢复说明.md` 已提供恢复步骤与安全要求 |
 | 单元测试 | 24 个测试全部通过 |
+
+
+## 16. 整体联调、安全与前端优化（2026-11-12）
+
+| 项目 | 结果 |
+| --- | --- |
+| 接口冒烟测试 | 20/20 通过（`scripts/smoke_test.py`） |
+| 单元测试 | 24/24 通过 |
+| 演示脚本 | `docs/acceptance/8分钟演示脚本.md` |
+| 验收报告 | `docs/acceptance/验收测试报告.md` |
+| 用户说明 | `docs/acceptance/用户使用说明.md` |
+| 安全评估 | `docs/security/安全性评估与整改报告.md` |
+| 依赖审计 | `npm audit --omit=dev` 0 vulnerabilities |
+| 上传校验 | 伪装 PDF 返回 400/20002；TXT 返回 400/20002；合法 DOCX 通过 |
+| POC 鉴权 | 未登录 401；学生 403 |
+| 身份证号 | 无理由 400/20001；有理由 200 并写审计 |
+| Nginx | CSP、X-Frame、X-Content-Type、Referrer-Policy、登录限流 |
+| 前端优化 | Element Plus 按需引入；ECharts 模块化；首屏包体明显下降 |
+| 备份 | 数据库 13KB + 文件包 34KB + SHA-256 |
