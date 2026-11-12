@@ -130,6 +130,8 @@ npm run build
 | GET | `/api/v1/persons/{id}/archives` | 归档记录 |
 | GET | `/api/v1/archives/{id}/download` | 下载归档 ZIP |
 | GET | `/api/v1/materials/search?keyword=` | 材料全文检索 |
+| GET | `/api/v1/audit-logs` | 审计日志（R1） |
+| GET | `/api/v1/export-logs` | 导出记录（R1） |
 | GET | `/api/v1/reports/overview` | 报表总览 |
 | GET | `/api/v1/reports/stage-count` | 阶段人数 |
 | GET | `/api/v1/reports/completion` | 完成率与逾期 |
@@ -193,11 +195,12 @@ python3 poc/ocr_poc.py /tmp/page-05.png --keywords 文档说明 需求规格说�
 - M7 时限预警：四级预警、定时任务、预警清单与处置、倒推排期、年度日历、时限规则维护；
 - M8 统计报表：阶段人数、完成率、逾期、合规指数 M/T/Q、支部热力图、Excel 导出；
 - M9 电子档案：档案目录树、归档完整性核查、ZIP 归档包、清单/水印、全文检索；
-- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、材料复核、流程看板、时限预警、发展日历、时限规则、统计报表、电子档案、档案检索、消息中心、POC 实验室。
+- M10 审计与安全：登录/查看/上传/复核/推进/归档留痕、审计查询、导出记录、敏感字段理由、备份脚本与恢复说明；
+- Vue 3 + Element Plus 登录、布局、工作台、台账、清单配置、材料核验、材料复核、流程看板、时限预警、发展日历、时限规则、统计报表、电子档案、档案检索、审计日志、消息中心、POC 实验室。
 
 尚未实现（按设计后续迭代）：
 
-- M10 审计日志与数据安全完善；
+- 整体联调、验收测试、8 分钟演示脚本、结题文档；
 - 流程看板与六规则推进；
 - 时限预警与倒推排期；
 - 报表导出、合规指数、归档、审计日志。
