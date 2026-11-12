@@ -1,7 +1,17 @@
 <template>
   <div>
-    <h2 class="page-title">工作台</h2>
-    <p class="page-subtitle">欢迎，{{ auth.displayName }}。当前为工程骨架与 POC 验证环境。</p>
+    <div class="hero">
+      <div>
+        <div class="hero-kicker">党员发展全流程智能管控</div>
+        <h1>把“靠人记、靠人催、靠人看”<br />变成可锁、可核、可算、可见</h1>
+        <p class="hero-desc">规则引擎 + 大模型双引擎核验 · 三锁闭环 · 合规指数 · 电子档案</p>
+      </div>
+      <div class="hero-badges">
+        <div><strong>30s</strong><span>文本类核验</span></div>
+        <div><strong>60s</strong><span>扫描件核验</span></div>
+        <div><strong>4 级</strong><span>时限预警</span></div>
+      </div>
+    </div>
 
     <div class="stat-grid">
       <div class="stat-card">
@@ -76,6 +86,52 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.hero {
+  background: linear-gradient(120deg, #8f1d14 0%, #b42318 58%, #7a1710 100%);
+  color: #fff;
+  border-radius: 14px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 30px rgba(143, 29, 20, 0.18);
+}
+.hero-kicker {
+  color: #ffd98a;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.hero h1 {
+  font-size: 24px;
+  line-height: 1.45;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.hero-desc {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+}
+.hero-badges {
+  display: flex;
+  gap: 26px;
+}
+.hero-badges div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero-badges strong {
+  font-size: 26px;
+  color: #ffd98a;
+}
+.hero-badges span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -93,6 +149,10 @@ h3 {
 @media (max-width: 1000px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

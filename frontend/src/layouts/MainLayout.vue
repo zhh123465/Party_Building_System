@@ -53,7 +53,8 @@
       <el-header class="header">
         <div class="header-left">
           <span class="header-title">{{ route.meta.title || '工作台' }}</span>
-          <el-tag size="small" effect="plain" type="danger">一期 MVP 骨架</el-tag>
+          <el-tag size="small" effect="plain" type="danger">一期 MVP</el-tag>
+          <span class="today">{{ today }}</span>
         </div>
         <div class="header-right">
           <el-badge :value="unread" :hidden="unread === 0" class="bell">
@@ -94,6 +95,7 @@ const auth = useAuthStore()
 
 const activeMenu = computed(() => route.path)
 const unread = ref(0)
+const today = new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })
 
 async function refreshUnread() {
   try {
@@ -180,6 +182,10 @@ async function onCommand(command) {
 .header-title {
   font-size: 16px;
   font-weight: 600;
+}
+.today {
+  color: #98a2b3;
+  font-size: 12px;
 }
 .header-right {
   display: flex;

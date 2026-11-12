@@ -68,7 +68,7 @@
 
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import * as echarts from 'echarts'
+import echarts from '../utils/echarts'
 import { ElMessage } from 'element-plus'
 import { complianceHeatmap, complianceList, reportOverview } from '../api/report'
 import { useAuthStore } from '../stores/auth'
