@@ -3,6 +3,7 @@ package com.party.build.review.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.party.build.audit.domain.Message;
+import com.party.build.audit.service.AuditService;
 import com.party.build.audit.service.MessageService;
 import com.party.build.auth.domain.SysUser;
 import com.party.build.auth.mapper.SysUserMapper;
@@ -62,6 +63,7 @@ public class ReviewService {
     private final SysUserMapper userMapper;
     private final PersonService personService;
     private final MessageService messageService;
+    private final AuditService auditService;
 
     public List<String> templates() {
         return TEMPLATES;
@@ -157,6 +159,9 @@ public class ReviewService {
             // 初审通过，仍停留在 M3，等待支部书记终审
             materialMapper.updateById(material);
         }
+        auditService.log(principal, "REVIEW_MATERIAL", "MATERIAL", materialId,
+                "SUCCESS", request.getOpinion(),
+                "level=" + level + ", conclusion=" + conclusion);
         return log;
     }
 

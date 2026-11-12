@@ -1,5 +1,6 @@
 package com.party.build.person.controller;
 
+import com.party.build.audit.service.AuditService;
 import com.party.build.auth.security.UserPrincipal;
 import com.party.build.common.api.PageResult;
 import com.party.build.common.api.Result;
@@ -29,6 +30,7 @@ import java.util.List;
 public class PersonController {
     private final PersonService personService;
     private final ImportService importService;
+    private final AuditService auditService;
 
     @GetMapping
     public Result<PageResult<PersonVO>> list(@RequestParam(defaultValue = "1") long page,
@@ -71,7 +73,15 @@ public class PersonController {
 
     @GetMapping("/{id}/id-card")
     @PreAuthorize("hasAnyRole('R1','R2')")
-    public Result<String> idCard(@PathVariable Long id, @AuthenticationPrincipal UserPrincipal principal) {
-        return Result.ok(personService.decryptIdCard(id, principal));
+    public Result<String> idCard(@PathVariable Long id,
+                                 @RequestParam(required = false) String reason,
+                                 @AuthenticationPrincipal UserPrincipal principal) {
+        if (reason == null || reason.trim().length() < 5) {
+            throw new com.party.build.common.exception.BizException(
+                    com.party.build.common.api.ErrorCode.VALIDATION_ERROR, "请填写至少 5 个字的查看理由");
+        }
+        String value = personService.decryptIdCard(id, principal);
+        auditService.log(principal, "VIEW_ID_CARD", "PERSON", id, "SUCCESS", reason, null);
+        return Result.ok(value);
     }
 }

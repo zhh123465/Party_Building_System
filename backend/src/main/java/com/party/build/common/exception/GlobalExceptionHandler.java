@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
             case 10001, 10006 -> HttpStatus.UNAUTHORIZED;
             case 10003, 10004 -> HttpStatus.FORBIDDEN;
             case 10005 -> HttpStatus.LOCKED;
-            case 20002, 20003 -> HttpStatus.BAD_REQUEST;
+            case 20001, 20002, 20003 -> HttpStatus.BAD_REQUEST;
             case 30001, 30002 -> HttpStatus.UNPROCESSABLE_ENTITY;
             case 30003, 30004, 30005 -> HttpStatus.CONFLICT;
             case 40001 -> HttpStatus.GATEWAY_TIMEOUT;

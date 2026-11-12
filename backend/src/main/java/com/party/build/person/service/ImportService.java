@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.party.build.auth.domain.Branch;
 import com.party.build.auth.mapper.BranchMapper;
 import com.party.build.auth.security.UserPrincipal;
+import com.party.build.audit.service.AuditService;
 import com.party.build.common.api.ErrorCode;
 import com.party.build.common.exception.BizException;
 import com.party.build.common.util.CryptoService;
@@ -41,6 +42,7 @@ public class ImportService {
     private final PersonMapper personMapper;
     private final BranchMapper branchMapper;
     private final CryptoService cryptoService;
+    private final AuditService auditService;
 
     public ImportResult importExcel(InputStream inputStream, UserPrincipal principal) {
         List<RowData> rows = new ArrayList<>();
@@ -78,6 +80,9 @@ public class ImportService {
                 result.getErrors().add(new ImportResult.RowError(row.rowNo, "unknown", e.getMessage()));
             }
         }
+        auditService.log(principal, "IMPORT_PERSON", "IMPORT", null,
+                result.getFailed() == 0 ? "SUCCESS" : "PARTIAL",
+                "成功 " + result.getSuccess() + " 行，失败 " + result.getFailed() + " 行", null);
         return result;
     }
 

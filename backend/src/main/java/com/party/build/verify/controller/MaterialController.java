@@ -1,5 +1,6 @@
 package com.party.build.verify.controller;
 
+import com.party.build.audit.service.AuditService;
 import com.party.build.auth.security.UserPrincipal;
 import com.party.build.common.api.Result;
 import com.party.build.verify.domain.VerifyTask;
@@ -25,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MaterialController {
     private final MaterialService materialService;
+    private final AuditService auditService;
 
     @GetMapping("/persons/{personId}/materials")
     public Result<List<MaterialVO>> list(@PathVariable Long personId,
@@ -35,14 +37,19 @@ public class MaterialController {
     @GetMapping("/materials/{id}")
     public Result<MaterialDetailVO> detail(@PathVariable Long id,
                                            @AuthenticationPrincipal UserPrincipal principal) {
-        return Result.ok(materialService.get(id, principal));
+        MaterialDetailVO detail = materialService.get(id, principal);
+        auditService.log(principal, "VIEW_MATERIAL", "MATERIAL", id, "SUCCESS", "查看材料详情", null);
+        return Result.ok(detail);
     }
 
     @PostMapping("/materials/{id}/versions")
     public Result<UploadResult> upload(@PathVariable Long id,
                                        @RequestParam("file") MultipartFile file,
                                        @AuthenticationPrincipal UserPrincipal principal) {
-        return Result.ok(materialService.upload(id, file, principal));
+        UploadResult result = materialService.upload(id, file, principal);
+        auditService.log(principal, "UPLOAD_MATERIAL", "MATERIAL", id, "SUCCESS",
+                "上传版本 v" + result.getVersionNo(), null);
+        return Result.ok(result);
     }
 
     @GetMapping("/materials/{id}/versions")
@@ -57,6 +64,8 @@ public class MaterialController {
                                              @PathVariable Long versionId,
                                              @AuthenticationPrincipal UserPrincipal principal) {
         Path path = materialService.resolveVersionFile(id, versionId, principal);
+        auditService.log(principal, "DOWNLOAD_MATERIAL", "MATERIAL", id, "SUCCESS",
+                "下载材料版本 " + versionId, null);
         Resource resource = new FileSystemResource(path);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,

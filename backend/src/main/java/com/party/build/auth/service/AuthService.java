@@ -9,6 +9,7 @@ import com.party.build.auth.dto.UserInfo;
 import com.party.build.auth.mapper.SysUserMapper;
 import com.party.build.auth.security.JwtService;
 import com.party.build.auth.security.UserPrincipal;
+import com.party.build.audit.service.AuditService;
 import com.party.build.common.api.ErrorCode;
 import com.party.build.common.exception.BizException;
 import lombok.RequiredArgsConstructor;
@@ -26,18 +27,22 @@ public class AuthService {
     private final SysUserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final AuditService auditService;
 
     public LoginResponse login(LoginRequest request) {
         SysUser user = userMapper.selectOne(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUsername, request.getUsername())
                 .last("limit 1"));
         if (user == null) {
+            auditService.logAnonymous(request.getUsername(), "LOGIN", "USER", null, "FAIL", "账号不存在", null);
             throw new BizException(ErrorCode.BAD_CREDENTIALS);
         }
         if (user.getStatus() == null || user.getStatus() != 1) {
+            auditService.log(user.getUserId(), user.getUsername(), "LOGIN", "USER", user.getUserId(), "FAIL", "账号停用", null);
             throw new BizException(ErrorCode.ACCOUNT_DISABLED);
         }
         if (user.getLockUntil() != null && user.getLockUntil().isAfter(LocalDateTime.now())) {
+            auditService.log(user.getUserId(), user.getUsername(), "LOGIN", "USER", user.getUserId(), "FAIL", "账号锁定", null);
             throw new BizException(ErrorCode.ACCOUNT_LOCKED);
         }
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
@@ -48,6 +53,7 @@ public class AuthService {
                 user.setFailedCount(0);
             }
             userMapper.updateById(user);
+            auditService.log(user.getUserId(), user.getUsername(), "LOGIN", "USER", user.getUserId(), "FAIL", "密码错误", null);
             throw new BizException(ErrorCode.BAD_CREDENTIALS);
         }
 
@@ -58,6 +64,7 @@ public class AuthService {
 
         String token = jwtService.generate(user.getUserId(), user.getRoleCode(), user.getBranchId(),
                 user.getPersonId(), user.getTokenVersion() == null ? 0 : user.getTokenVersion());
+        auditService.log(user.getUserId(), user.getUsername(), "LOGIN", "USER", user.getUserId(), "SUCCESS", null, null);
         UserInfo info = toInfo(user);
         return new LoginResponse(token, jwtService.getExpireHours() * 3600, info);
     }
@@ -76,6 +83,7 @@ public class AuthService {
             user.setTokenVersion((user.getTokenVersion() == null ? 0 : user.getTokenVersion()) + 1);
             userMapper.updateById(user);
         }
+        auditService.log(principal, "LOGOUT", "USER", principal.getUserId(), "SUCCESS", null, null);
     }
 
     public void changePassword(UserPrincipal principal, ChangePasswordRequest request) {
@@ -87,6 +95,7 @@ public class AuthService {
         user.setMustChangePassword(0);
         user.setTokenVersion((user.getTokenVersion() == null ? 0 : user.getTokenVersion()) + 1);
         userMapper.updateById(user);
+        auditService.log(principal, "CHANGE_PASSWORD", "USER", principal.getUserId(), "SUCCESS", null, null);
     }
 
     private UserInfo toInfo(SysUser user) {

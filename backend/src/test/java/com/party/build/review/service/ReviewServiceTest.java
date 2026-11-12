@@ -1,5 +1,6 @@
 package com.party.build.review.service;
 
+import com.party.build.audit.service.AuditService;
 import com.party.build.audit.service.MessageService;
 import com.party.build.auth.domain.SysUser;
 import com.party.build.auth.mapper.SysUserMapper;
@@ -39,6 +40,7 @@ class ReviewServiceTest {
         SysUserMapper userMapper = mock(SysUserMapper.class);
         PersonService personService = mock(PersonService.class);
         MessageService messageService = mock(MessageService.class);
+        AuditService auditService = mock(AuditService.class);
 
         when(materialMapper.selectById(material.getMaterialId())).thenReturn(material);
         Person person = new Person();
@@ -57,7 +59,7 @@ class ReviewServiceTest {
         report.setVersionId(1L);
         when(reportMapper.selectById(1L)).thenReturn(report);
         return new ReviewService(logMapper, materialMapper, versionMapper, reportMapper, taskMapper,
-                typeMapper, personMapper, userMapper, personService, messageService);
+                typeMapper, personMapper, userMapper, personService, messageService, auditService);
     }
 
     private Material material() {
