@@ -6,6 +6,12 @@
 ## 1. 访问地址
 
 ```text
+https://dangjian.morose.top/
+```
+
+HTTP 备用：
+
+```text
 http://64.83.11.147/
 ```
 
@@ -37,7 +43,9 @@ Nginx（/usr/local/nginx）
 
 | 项 | 路径 |
 | --- | --- |
-| Nginx 站点配置 | `/usr/local/nginx/conf/vhost/party.conf` |
+| Nginx HTTPS 站点配置 | `/usr/local/nginx/conf/vhost/party-domain.conf` |
+| Nginx IP 站点配置 | `/usr/local/nginx/conf/vhost/party.conf` |
+| 证书 | `/etc/letsencrypt/live/dangjian.morose.top/` |
 | 前端静态目录 | `/var/www/party` |
 | 后端 Jar | `/root/develop/Party_Building_System/backend/target/party-build-system-0.1.0-SNAPSHOT.jar` |
 | 后端日志 | `/tmp/opencode/app4.log`（当前进程） |

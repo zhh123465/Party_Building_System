@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # 为党员发展智能管理系统启用 HTTPS 子域名
 # 用法：
-#   bash scripts/enable_https_domain.sh party.morose.top your@email.com
+#   bash scripts/enable_https_domain.sh dangjian.morose.top your@email.com
 # 可选：
-#   SKIP_DNS_CHECK=1 bash scripts/enable_https_domain.sh party.morose.top your@email.com
+#   SKIP_DNS_CHECK=1 bash scripts/enable_https_domain.sh dangjian.morose.top your@email.com
 #
 # 前置条件：
-#   1. 域名服务商已添加 A 记录：party.morose.top -> 64.83.11.147
+#   1. 域名服务商已添加 A 记录：dangjian.morose.top -> 64.83.11.147
 #   2. 云服务器安全组放行 TCP 80/443
 #   3. 已安装 certbot（apt-get install -y certbot）
 set -euo pipefail
 
-DOMAIN="${1:-party.morose.top}"
+DOMAIN="${1:-dangjian.morose.top}"
 EMAIL="${2:-}"
 PUBLIC_IP="${PUBLIC_IP:-$(curl -sS -m 10 https://api.ipify.org || true)}"
 WEBROOT="/var/www/letsencrypt"
@@ -20,7 +20,7 @@ CERT="/etc/letsencrypt/live/$DOMAIN/fullchain.pem"
 KEY="/etc/letsencrypt/live/$DOMAIN/privkey.pem"
 
 if [ -z "$EMAIL" ]; then
-  echo "用法：bash scripts/enable_https_domain.sh party.morose.top your@email.com"
+  echo "用法：bash scripts/enable_https_domain.sh dangjian.morose.top your@email.com"
   exit 1
 fi
 
@@ -36,7 +36,7 @@ DNS 尚未指向本服务器，暂不修改 Nginx。
 
 请先在域名服务商添加：
   记录类型：A
-  主机记录：party
+  主机记录：dangjian
   记录值：$PUBLIC_IP
   TTL：600
 

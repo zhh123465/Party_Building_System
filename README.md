@@ -6,11 +6,13 @@
 
 ## 0. 在线演示（POC）
 
-> 云服务器公网地址：**http://64.83.11.147/**
+> HTTPS 访问：**https://dangjian.morose.top/**
+>
+> HTTP 备用：`http://64.83.11.147/`
 >
 > 演示账号密码均为 `Party@2026`：`admin`（R1）、`secretary`（R2）、`assistant`（R3）、`student`（R4）。
 >
-> 当前为 HTTP + 虚构数据演示环境，禁止上传真实政审材料；上线前必须改密、启 HTTPS 并限制访问范围。部署与排障见 `DEPLOYMENT.md`。
+> 当前为 POC 演示环境，全部使用虚构数据；正式使用前必须修改默认密码、限制访问范围。部署与排障见 `DEPLOYMENT.md`。
 
 ## 1. 项目简介
 
@@ -78,7 +80,7 @@
 | 8 | 用户使用说明 | `docs/acceptance/用户使用说明.md` | 各角色操作说明 |
 | 9 | 安全性评估与整改报告 | `docs/security/安全性评估与整改报告.md` | 风险清单、已修复项、上线前条件 |
 | 10 | 备份与恢复说明 | `docs/security/备份与恢复说明.md` | 备份策略、恢复步骤、安全要求 |
-| 11 | HTTPS 与域名配置 | `docs/security/HTTPS与域名配置.md` | 使用 `party.morose.top` 启用 HTTPS 的步骤 |
+| 11 | HTTPS 与域名配置 | `docs/security/HTTPS与域名配置.md` | 使用 `dangjian.morose.top` 启用 HTTPS 的步骤 |
 
 建议阅读顺序：**需求规格说明书 → 需求分析报告 → 可行性研究报告 → 总体设计说明书 → 详细设计说明书**。
 
