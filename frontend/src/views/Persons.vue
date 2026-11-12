@@ -110,7 +110,7 @@
 
 <script setup>
 import { onMounted, reactive, ref, computed } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { getPerson, getIdCard, importPersons, listPersons } from '../api/person'
 import { useAuthStore } from '../stores/auth'
 
@@ -176,7 +176,12 @@ async function openDetail(row) {
 }
 
 async function showIdCard() {
-  idCardFull.value = await getIdCard(detail.value.personId)
+  const { value } = await ElMessageBox.prompt('查看完整身份证号属于敏感操作，请填写查看理由（至少 5 个字）。', '查看理由', {
+    inputValidator: (v) => (v && v.trim().length >= 5) || '理由至少 5 个字',
+    confirmButtonText: '确认查看',
+    cancelButtonText: '取消'
+  })
+  idCardFull.value = await getIdCard(detail.value.personId, value.trim())
 }
 
 function onFileChange(file) {

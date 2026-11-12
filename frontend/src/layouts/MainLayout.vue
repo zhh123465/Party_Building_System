@@ -42,6 +42,9 @@
         <el-menu-item v-if="auth.role === 'R1'" index="/config/time-rules">
           <el-icon><Timer /></el-icon><span>时限规则</span>
         </el-menu-item>
+        <el-menu-item v-if="auth.role === 'R1'" index="/audit">
+          <el-icon><Document /></el-icon><span>审计日志</span>
+        </el-menu-item>
       </el-menu>
       <div class="aside-footer">演示数据均为虚构</div>
     </el-aside>
